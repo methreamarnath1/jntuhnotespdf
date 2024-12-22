@@ -1,72 +1,82 @@
 import React, { useState } from 'react';
-import { Note } from '../types';
 import { Download } from 'lucide-react';
-import { PDFPreviewModal } from './modal/PDFPreviewModal';
+import { Note } from '../types';
+import { downloadNote } from '../utils/download';
+import { LoadingSpinner } from './ui/LoadingSpinner';
+import { PreviewModal } from './PreviewModal';
 
 interface NoteCardProps {
   note: Note;
-  onBuyNow: (note: Note) => void;
 }
 
-export const NoteCard: React.FC<NoteCardProps> = ({ note, onBuyNow }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+export const NoteCard: React.FC<NoteCardProps> = ({ note }) => {
+  const [showPreview, setShowPreview] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const handleDownload = async () => {
+    try {
+      setIsDownloading(true);
+      await downloadNote(note);
+    } catch (error) {
+      console.error('Download failed:', error);
+      alert('Failed to download PDF. Please try again.');
+    } finally {
+      setIsDownloading(false);
+    }
+  };
 
   return (
     <>
-      <div
-        className="bg-gray-800 rounded-lg shadow-xl overflow-hidden transition-transform hover:scale-105 border border-gray-700 cursor-pointer"
-        onClick={() => setIsModalOpen(true)}
-        role="button"
-        tabIndex={0}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            setIsModalOpen(true);
-          }
-        }}
+      <div 
+        className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl shadow-2xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-blue-500/20 border border-gray-700 cursor-pointer"
+        onClick={() => setShowPreview(true)}
       >
-        {/* Replacing image with subject name */}
-        <div className="w-full h-48 bg-dark-blue flex items-center justify-center">
-          <h2 className="text-white text-2xl font-bold">{note.subject}</h2>
+        <div className="w-full h-48 bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center p-6 relative overflow-hidden">
+          <div className="absolute inset-0 bg-black opacity-10"></div>
+          <h2 className="text-white text-2xl font-bold text-center relative z-10 line-clamp-3">{note.subject}</h2>
         </div>
 
-        <div className="p-4">
-          <div className="flex justify-between items-start mb-2">
-            <h3 className="text-lg font-semibold text-white">{note.subject}</h3>
-            <div className="flex flex-wrap gap-2">
-              <span className="px-2 py-1 bg-blue-900 text-blue-100 text-xs rounded-full">
-                {note.branch}
-              </span>
-              <span className="px-2 py-1 bg-green-900 text-green-100 text-xs rounded-full">
-                {note.year} Year
-              </span>
-              <span className="px-2 py-1 bg-purple-900 text-purple-100 text-xs rounded-full">
-                {note.regulation}
-              </span>
-            </div>
+        <div className="p-6">
+          <div className="flex flex-wrap gap-2 mb-4">
+            <span className="px-3 py-1 bg-blue-500/10 text-blue-400 text-xs font-medium rounded-full border border-blue-500/20">
+              {note.branch}
+            </span>
+            <span className="px-3 py-1 bg-green-500/10 text-green-400 text-xs font-medium rounded-full border border-green-500/20">
+              {note.year} Year
+            </span>
+            <span className="px-3 py-1 bg-purple-500/10 text-purple-400 text-xs font-medium rounded-full border border-purple-500/20">
+              {note.regulation}
+            </span>
           </div>
-          <p className="text-sm text-gray-400">{note.semester} Semester</p>
-          <p className="text-sm text-gray-500 mt-2">{note.description}</p>
-          <div className="mt-4 flex items-center justify-between">
-            <span className="text-xl font-bold text-white">₹{note.price}</span>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onBuyNow(note);
-              }}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-blue-700 transition-colors"
-            >
-              <Download size={20} />
-              Buy Now
-            </button>
-          </div>
+          
+          <p className="text-gray-300 text-sm mb-6 line-clamp-3">{note.description}</p>
+          
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              handleDownload();
+            }}
+            disabled={isDownloading}
+            className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-lg flex items-center justify-center gap-3 hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 disabled:opacity-50 shadow-lg hover:shadow-blue-500/20"
+          >
+            {isDownloading ? (
+              <LoadingSpinner />
+            ) : (
+              <>
+                <Download size={20} />
+                Download PDF
+              </>
+            )}
+          </button>
         </div>
       </div>
 
-      <PDFPreviewModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+      <PreviewModal
+        isOpen={showPreview}
+        onClose={() => setShowPreview(false)}
         note={note}
-        onPurchase={onBuyNow}
+        onDownload={handleDownload}
+        isDownloading={isDownloading}
       />
     </>
   );

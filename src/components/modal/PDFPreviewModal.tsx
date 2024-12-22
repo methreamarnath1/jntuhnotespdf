@@ -28,7 +28,6 @@ export const PDFPreviewModal: React.FC<PDFPreviewModalProps> = ({
       ) : (
         <div className="space-y-6 bg-gray-900 text-gray-200 p-6 rounded-lg shadow-lg">
           <div className="grid md:grid-cols-2 gap-6">
-            {/* Replacing image with subject name */}
             <div className="w-full h-48 bg-gradient-to-r from-indigo-500 to-blue-600 flex items-center justify-center rounded-lg shadow-md">
               <h2 className="text-3xl font-bold text-white">{note.subject}</h2>
             </div>
