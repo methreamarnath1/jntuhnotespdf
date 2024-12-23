@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Download } from 'lucide-react';
+import { Eye } from 'lucide-react';
 import { Note } from '../types';
-import { downloadNote } from '../utils/download';
 import { LoadingSpinner } from './ui/LoadingSpinner';
 import { PreviewModal } from './PreviewModal';
+import { UnitModal } from './UnitModal';
 
 interface NoteCardProps {
   note: Note;
@@ -11,18 +11,16 @@ interface NoteCardProps {
 
 export const NoteCard: React.FC<NoteCardProps> = ({ note }) => {
   const [showPreview, setShowPreview] = useState(false);
-  const [isDownloading, setIsDownloading] = useState(false);
+  const [showUnits, setShowUnits] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleDownload = async () => {
-    try {
-      setIsDownloading(true);
-      await downloadNote(note);
-    } catch (error) {
-      console.error('Download failed:', error);
-      alert('Failed to download PDF. Please try again.');
-    } finally {
-      setIsDownloading(false);
-    }
+  const handleViewUnits = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsLoading(true);
+    setTimeout(() => {
+      setShowUnits(true);
+      setIsLoading(false);
+    }, 500);
   };
 
   return (
@@ -52,19 +50,16 @@ export const NoteCard: React.FC<NoteCardProps> = ({ note }) => {
           <p className="text-gray-300 text-sm mb-6 line-clamp-3">{note.description}</p>
           
           <button
-            onClick={(e) => {
-              e.stopPropagation();
-              handleDownload();
-            }}
-            disabled={isDownloading}
+            onClick={handleViewUnits}
+            disabled={isLoading}
             className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-lg flex items-center justify-center gap-3 hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 disabled:opacity-50 shadow-lg hover:shadow-blue-500/20"
           >
-            {isDownloading ? (
+            {isLoading ? (
               <LoadingSpinner />
             ) : (
               <>
-                <Download size={20} />
-                Download PDF
+                <Eye size={20} />
+                View Notes
               </>
             )}
           </button>
@@ -75,8 +70,12 @@ export const NoteCard: React.FC<NoteCardProps> = ({ note }) => {
         isOpen={showPreview}
         onClose={() => setShowPreview(false)}
         note={note}
-        onDownload={handleDownload}
-        isDownloading={isDownloading}
+      />
+
+      <UnitModal
+        isOpen={showUnits}
+        onClose={() => setShowUnits(false)}
+        note={note}
       />
     </>
   );

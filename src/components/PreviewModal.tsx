@@ -1,50 +1,50 @@
 import React from 'react';
-import { X, Download, BookOpen, GraduationCap, Calendar } from 'lucide-react';
+import { X, BookOpen, GraduationCap, Calendar, FileText } from 'lucide-react';
 import { Note } from '../types';
-import { LoadingSpinner } from './ui/LoadingSpinner';
 
 interface PreviewModalProps {
   isOpen: boolean;
   onClose: () => void;
   note: Note;
-  onDownload: () => void;
-  isDownloading: boolean;
 }
 
 export const PreviewModal: React.FC<PreviewModalProps> = ({
   isOpen,
   onClose,
   note,
-  onDownload,
-  isDownloading
 }) => {
   if (!isOpen) return null;
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm animate-fade-in"
       onClick={onClose}
     >
       <div 
-        className="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-xl shadow-2xl max-w-2xl w-full m-4 border border-gray-700"
+        className="relative bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-2xl shadow-2xl max-w-4xl w-full mx-4 border border-gray-700"
         onClick={e => e.stopPropagation()}
       >
+        {/* Header */}
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-white flex items-center gap-3">
+          <h2 className="text-3xl font-bold text-white flex items-center gap-3 animate-slide-in">
             <BookOpen className="text-blue-400" />
             {note.subject}
           </h2>
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-white transition-colors"
+            aria-label="Close Preview"
           >
-            <X size={24} />
+            <X size={28} />
           </button>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="space-y-4">
-            <div className="flex items-center gap-3 text-gray-300">
+        {/* Content Grid */}
+        <div className="grid lg:grid-cols-2 gap-8">
+          {/* Information Section */}
+          <div className="space-y-6">
+            {/* Branch */}
+            <div className="flex items-center gap-3 text-gray-300 animate-fade-in">
               <GraduationCap className="text-blue-400" />
               <div>
                 <p className="text-sm text-gray-400">Branch</p>
@@ -52,7 +52,8 @@ export const PreviewModal: React.FC<PreviewModalProps> = ({
               </div>
             </div>
 
-            <div className="flex items-center gap-3 text-gray-300">
+            {/* Year & Semester */}
+            <div className="flex items-center gap-3 text-gray-300 animate-fade-in delay-100">
               <Calendar className="text-green-400" />
               <div>
                 <p className="text-sm text-gray-400">Year & Semester</p>
@@ -60,46 +61,45 @@ export const PreviewModal: React.FC<PreviewModalProps> = ({
               </div>
             </div>
 
-            <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/20">
+            {/* Description */}
+            <div className="bg-blue-500/10 rounded-lg p-5 border border-blue-500/20 animate-fade-in delay-200">
               <h3 className="text-blue-400 font-medium mb-2">Description</h3>
-              <p className="text-gray-300 text-sm">{note.description}</p>
+              <p className="text-gray-300 text-sm leading-relaxed">
+                {note.description}
+              </p>
             </div>
           </div>
 
+          {/* Included Items Section */}
           <div className="space-y-6">
-            <div className="bg-gradient-to-br from-indigo-500/10 to-purple-500/10 rounded-lg p-6 border border-indigo-500/20">
+            <div className="bg-gradient-to-br from-gray-700 to-gray-800 rounded-lg p-6 border border-blue-500/20 animate-fade-in delay-300">
               <h3 className="text-xl font-semibold text-white mb-4">What's Included</h3>
               <ul className="space-y-3">
-                <li className="flex items-center gap-2 text-gray-300">
-                  <div className="w-2 h-2 rounded-full bg-indigo-400" />
+                <li className="flex items-center gap-3 text-gray-300">
+                  <FileText className="text-blue-400" size={20} />
                   Complete subject notes
                 </li>
-                <li className="flex items-center gap-2 text-gray-300">
-                  <div className="w-2 h-2 rounded-full bg-indigo-400" />
+                <li className="flex items-center gap-3 text-gray-300">
+                  <FileText className="text-blue-400" size={20} />
                   Previous year questions
                 </li>
-                <li className="flex items-center gap-2 text-gray-300">
-                  <div className="w-2 h-2 rounded-full bg-indigo-400" />
+                <li className="flex items-center gap-3 text-gray-300">
+                  <FileText className="text-blue-400" size={20} />
                   Important formulas
                 </li>
               </ul>
             </div>
-
-            <button
-              onClick={onDownload}
-              disabled={isDownloading}
-              className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-4 rounded-lg flex items-center justify-center gap-3 hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 disabled:opacity-50 shadow-lg hover:shadow-blue-500/20"
-            >
-              {isDownloading ? (
-                <LoadingSpinner />
-              ) : (
-                <>
-                  <Download size={20} />
-                  Download PDF
-                </>
-              )}
-            </button>
           </div>
+        </div>
+
+        {/* Footer */}
+        <div className="flex justify-center lg:justify-end mt-8">
+          <button
+            onClick={onClose}
+            className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-lg shadow-lg hover:from-blue-700 hover:to-indigo-700 transition-all animate-bounce-once"
+          >
+            Close Preview
+          </button>
         </div>
       </div>
     </div>
