@@ -1,53 +1,39 @@
 import React from 'react';
-import { Header } from './components/layout/Header';
-import { Hero } from './components/layout/Hero';
-import { FilterSection } from './components/filters/FilterSection';
-import { NoteGrid } from './components/notes/NoteGrid';
-import { Pagination } from './components/Pagination';
-import { useNotes } from './hooks/useNotes';
-import { initializeRazorpay } from './utils/payment';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
+import { Navbar } from './components/layout/Navbar';
+import { Footer } from './components/layout/Footer';
+import { HomePage } from './components/home/HomePage';
+import { NotesPage } from './pages/NotesPage';
+import { CoursesPage } from './pages/CoursesPage';
+import { CalculatorPage } from './pages/CalculatorPage';
+import { AboutPage } from './pages/AboutPage';
+import { Contact } from './pages/Contact';
+import { Terms } from './pages/Terms';
+import { PrivacyPolicy } from './pages/PrivacyPolicy';
+import { InstallPWA } from './components/InstallPWA';
 
 function App() {
-  const {
-    notes,
-    totalPages,
-    currentPage,
-    setPage,
-    searchTerm,
-    setSearchTerm,
-    selectedBranch,
-    selectedYear,
-    selectedSemester,
-    selectedRegulation,
-    handleFilterChange,
-  } = useNotes();
-
   return (
-    <div className="min-h-screen bg-gray-900">
-      <Header />
-      <Hero />
-      <main className="max-w-7xl mx-auto px-4 py-8">
-        <FilterSection
-          searchTerm={searchTerm}
-          selectedBranch={selectedBranch}
-          selectedYear={selectedYear}
-          selectedSemester={selectedSemester}
-          selectedRegulation={selectedRegulation}
-          onSearch={setSearchTerm}
-          onFilterChange={handleFilterChange}
-        />
-        <div className="mt-8">
-          <NoteGrid notes={notes} onBuyNow={initializeRazorpay} />
+    <HelmetProvider>
+      <BrowserRouter>
+        <div className="min-h-screen bg-gray-900 text-white">
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/notes" element={<NotesPage />} />
+            <Route path="/courses" element={<CoursesPage />} />
+            <Route path="/calculator" element={<CalculatorPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+          </Routes>
+          <Footer />
+          <InstallPWA />
         </div>
-        {totalPages > 1 && (
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setPage}
-          />
-        )}
-      </main>
-    </div>
+      </BrowserRouter>
+    </HelmetProvider>
   );
 }
 

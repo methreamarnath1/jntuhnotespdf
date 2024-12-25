@@ -9,41 +9,16 @@ interface UnitModalProps {
   note: Note;
 }
 
-const UNITS = [
-  {
-    id: '1',
-    title: 'Unit 1',
-    description: 'Introduction and Fundamentals',
-    pdfUrl: 'https://drive.google.com/file/d/15V1HGZwFiydSIYp5Aa3FLwOb5Cyks6gm/view?usp=sharing'
-  },
-  {
-    id: '2',
-    title: 'Unit 2',
-    description: 'Core Concepts and Principles',
-    pdfUrl: 'https://drive.google.com/file/d/15V1HGZwFiydSIYp5Aa3FLwOb5Cyks6gm/view?usp=sharing'
-  },
-  {
-    id: '3',
-    title: 'Unit 3',
-    description: 'Advanced Topics',
-    pdfUrl: 'https://drive.google.com/file/d/15V1HGZwFiydSIYp5Aa3FLwOb5Cyks6gm/view?usp=sharing'
-  },
-  {
-    id: '4',
-    title: 'Unit 4',
-    description: 'Applications and Case Studies',
-    pdfUrl: 'https://drive.google.com/file/d/15V1HGZwFiydSIYp5Aa3FLwOb5Cyks6gm/view?usp=sharing'
-  },
-  {
-    id: '5',
-    title: 'Unit 5',
-    description: 'Modern Trends and Future Scope',
-    pdfUrl: 'https://drive.google.com/file/d/15V1HGZwFiydSIYp5Aa3FLwOb5Cyks6gm/view?usp=sharing'
-  }
-];
-
 export const UnitModal: React.FC<UnitModalProps> = ({ isOpen, onClose, note }) => {
   const [selectedUnit, setSelectedUnit] = React.useState<string | null>(null);
+
+  const units = [
+    { id: '1', title: 'Unit 1', pdfUrl: note.unit1, description: 'Introduction and Fundamentals' },
+    { id: '2', title: 'Unit 2', pdfUrl: note.unit2, description: 'Core Concepts and Principles' },
+    { id: '3', title: 'Unit 3', pdfUrl: note.unit3, description: 'Advanced Topics' },
+    { id: '4', title: 'Unit 4', pdfUrl: note.unit4, description: 'Applications and Case Studies' },
+    { id: '5', title: 'Unit 5', pdfUrl: note.unit5, description: 'Modern Trends and Future Scope' }
+  ].filter(unit => unit.pdfUrl);
 
   if (!isOpen) return null;
 
@@ -52,7 +27,7 @@ export const UnitModal: React.FC<UnitModalProps> = ({ isOpen, onClose, note }) =
       <div className="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-xl shadow-2xl max-w-2xl w-full m-4 border border-gray-700">
         {selectedUnit ? (
           <PDFViewer
-            url={UNITS.find(u => u.id === selectedUnit)?.pdfUrl || ''}
+            url={units.find(u => u.id === selectedUnit)?.pdfUrl || ''}
             onClose={() => setSelectedUnit(null)}
           />
         ) : (
@@ -67,29 +42,35 @@ export const UnitModal: React.FC<UnitModalProps> = ({ isOpen, onClose, note }) =
               </button>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {UNITS.map((unit) => (
-                <div
-                  key={unit.id}
-                  onClick={() => setSelectedUnit(unit.id)}
-                  className="bg-gradient-to-br from-gray-700 to-gray-800 rounded-lg p-4 border border-blue-500/20 hover:border-blue-500/40 transition-all cursor-pointer group"
-                >
-                  <div className="flex items-start gap-3">
-                    <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400 group-hover:scale-110 transition-transform">
-                      <Book size={24} />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-white group-hover:text-blue-300 transition-colors">
-                        {unit.title}
-                      </h3>
-                      <p className="text-sm text-gray-400 mt-1">
-                        {unit.description}
-                      </p>
+            {units.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {units.map((unit) => (
+                  <div
+                    key={unit.id}
+                    onClick={() => setSelectedUnit(unit.id)}
+                    className="bg-gradient-to-br from-gray-700 to-gray-800 rounded-lg p-4 border border-blue-500/20 hover:border-blue-500/40 transition-all cursor-pointer group"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400 group-hover:scale-110 transition-transform">
+                        <Book size={24} />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-white group-hover:text-blue-300 transition-colors">
+                          {unit.title}
+                        </h3>
+                        <p className="text-sm text-gray-400 mt-1">
+                          {unit.description}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-8 text-gray-400">
+                No units available for this subject yet.
+              </div>
+            )}
 
             {/* Ad Section */}
             <div className="mt-6 bg-gradient-to-r from-gray-700/30 to-gray-800/30 p-4 rounded-lg border border-blue-500/10">

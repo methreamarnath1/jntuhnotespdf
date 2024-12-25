@@ -9,6 +9,11 @@ export interface Note {
   description: string;
   price: number;
   pdfUrl?: string;
+  unit1?: string;
+  unit2?: string;
+  unit3?: string;
+  unit4?: string;
+  unit5?: string;
 }
 
 export type Branch = 'CSE' | 'CSM' | 'ECE' | 'EEE' | 'CIVIL' | 'MECHANICAL';
