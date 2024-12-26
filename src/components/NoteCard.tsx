@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Eye } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Eye, Bookmark } from 'lucide-react';
 import { Note } from '../types';
 import { LoadingSpinner } from './ui/LoadingSpinner';
 import { PreviewModal } from './PreviewModal';
@@ -13,6 +13,27 @@ export const NoteCard: React.FC<NoteCardProps> = ({ note }) => {
   const [showPreview, setShowPreview] = useState(false);
   const [showUnits, setShowUnits] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
+
+  useEffect(() => {
+    const savedNotes = JSON.parse(localStorage.getItem('savedNotes') || '[]');
+    if (savedNotes.some((savedNote: Note) => savedNote.subject === note.subject)) {
+      setIsSaved(true);
+    }
+  }, [note]);
+
+  const handleSave = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const savedNotes = JSON.parse(localStorage.getItem('savedNotes') || '[]');
+    if (!isSaved) {
+      localStorage.setItem('savedNotes', JSON.stringify([...savedNotes, note]));
+      setIsSaved(true);
+    } else {
+      const newSavedNotes = savedNotes.filter((savedNote: Note) => savedNote.subject !== note.subject);
+      localStorage.setItem('savedNotes', JSON.stringify(newSavedNotes));
+      setIsSaved(false);
+    }
+  };
 
   const handleViewUnits = async (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -32,6 +53,12 @@ export const NoteCard: React.FC<NoteCardProps> = ({ note }) => {
         <div className="w-full h-48 bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center p-6 relative overflow-hidden">
           <div className="absolute inset-0 bg-black opacity-10"></div>
           <h2 className="text-white text-2xl font-bold text-center relative z-10 line-clamp-3">{note.subject}</h2>
+          <button
+            className="absolute top-4 right-4 text-white bg-blue-600 p-2 rounded-full hover:bg-blue-700 transition-all duration-300"
+            onClick={handleSave}
+          >
+            <Bookmark size={20} fill={isSaved ? 'currentColor' : 'none'} />
+          </button>
         </div>
 
         <div className="p-6">

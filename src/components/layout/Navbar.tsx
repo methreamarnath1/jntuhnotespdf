@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, BookOpen, Calculator, GraduationCap, BookOpenCheck, User } from 'lucide-react';
+import { Menu, X, BookOpen, Calculator, GraduationCap, BookOpenCheck, User,Bookmark } from 'lucide-react';
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,7 +10,8 @@ export const Navbar = () => {
     { name: 'JNTUH Notes', path: '/notes', icon: GraduationCap },
     { name: 'Free Courses', path: '/courses', icon: BookOpenCheck },
     { name: 'SGPA Calculator', path: '/calculator', icon: Calculator },
-    { name: 'About Us', path: '/about', icon: User }, // Updated icon
+    { name: 'Saved', path: '/saved', icon: Bookmark }, // Link to Saved page
+    { name: 'About Us', path: '/about', icon: User },
   ];
 
   return (
@@ -20,7 +21,7 @@ export const Navbar = () => {
           <div className="flex items-center">
             <Link to="/" className="flex items-center gap-2">
               <BookOpen className="h-8 w-8 text-blue-500" />
-              <span className="text-white font-bold text-xl">JNTUH Notes</span>
+              <span className="text-white font-bold text-xl">JNTUH Notes PDF</span>
             </Link>
           </div>
 

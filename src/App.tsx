@@ -8,6 +8,7 @@ import { NotesPage } from './pages/NotesPage';
 import { CoursesPage } from './pages/CoursesPage';
 import { CalculatorPage } from './pages/CalculatorPage';
 import { AboutPage } from './pages/AboutPage';
+import { SavedPage } from './pages/SavedPage';
 import { Contact } from './pages/Contact';
 import { Terms } from './pages/Terms';
 import { PrivacyPolicy } from './pages/PrivacyPolicy';
@@ -25,6 +26,7 @@ function App() {
             <Route path="/courses" element={<CoursesPage />} />
             <Route path="/calculator" element={<CalculatorPage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/saved" element={<SavedPage />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />

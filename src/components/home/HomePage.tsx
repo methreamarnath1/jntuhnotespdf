@@ -1,7 +1,6 @@
 import React from 'react';
-import { BookOpen, GraduationCap, Calculator, Users } from 'lucide-react';
+import { BookOpen, GraduationCap, Calculator, Users, Bookmark } from 'lucide-react';
 import { FeatureCard } from './FeatureCard';
- 
 import { Head } from '../SEO/Head';
 
 export const HomePage = () => {
@@ -23,6 +22,12 @@ export const HomePage = () => {
       description: 'Calculate your SGPA and CGPA easily',
       icon: Calculator,
       path: '/calculator'
+    },
+    {
+      title: 'Saved',
+      description: 'View your saved notes and courses',
+      icon: Bookmark,
+      path: '/saved'
     },
     {
       title: 'About Us',
@@ -79,8 +84,6 @@ export const HomePage = () => {
             <FeatureCard key={feature.title} {...feature} />
           ))}
         </div>
-
-        
       </main>
     </div>
   );
