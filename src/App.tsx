@@ -5,6 +5,7 @@ import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { HomePage } from './components/home/HomePage';
 import { NotesPage } from './pages/NotesPage';
+import { NotePage } from './pages/NotePage'; // Import the NotePage component
 import { CoursesPage } from './pages/CoursesPage';
 import { CalculatorPage } from './pages/CalculatorPage';
 import { AboutPage } from './pages/AboutPage';
@@ -23,6 +24,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/notes" element={<NotesPage />} />
+            <Route path="/notes/:id" element={<NotePage />} /> {/* Add the NotePage route */}
             <Route path="/courses" element={<CoursesPage />} />
             <Route path="/calculator" element={<CalculatorPage />} />
             <Route path="/about" element={<AboutPage />} />

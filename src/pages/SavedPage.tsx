@@ -1,18 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { Head } from '../components/SEO/Head';
 import { NoteCard } from '../components/NoteCard';
-import { Note } from '../types';
+import { CourseCard } from '../components/courses/CourseCard';
+import { Note, Course } from '../types';
+import { courseData } from '../data/courseData';
+import { AdUnit } from '../components/AdUnit';
 
 export const SavedPage: React.FC = () => {
   const [savedNotes, setSavedNotes] = useState<Note[]>([]);
-  const [savedCourses, setSavedCourses] = useState<any[]>([]);
+  const [savedCourses, setSavedCourses] = useState<Course[]>([]);
 
   useEffect(() => {
+    // Load saved notes
     const notes = JSON.parse(localStorage.getItem('savedNotes') || '[]');
-    const courses = JSON.parse(localStorage.getItem('savedCourses') || '[]');
     setSavedNotes(notes);
+
+    // Load saved courses
+    const savedCourseTitles = JSON.parse(localStorage.getItem('savedCourses') || '[]');
+    const courses = courseData.filter(course => 
+      savedCourseTitles.includes(course.title)
+    );
     setSavedCourses(courses);
   }, []);
+
+  const handleUnsaveCourse = (courseTitle: string) => {
+    const savedCourseTitles = JSON.parse(localStorage.getItem('savedCourses') || '[]');
+    const newSavedTitles = savedCourseTitles.filter((title: string) => title !== courseTitle);
+    localStorage.setItem('savedCourses', JSON.stringify(newSavedTitles));
+    
+    setSavedCourses(prev => prev.filter(course => course.title !== courseTitle));
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
@@ -21,27 +38,55 @@ export const SavedPage: React.FC = () => {
         description="View your saved notes and courses"
       />
       
+      {/* Top Ad */}
+      <AdUnit slot="2468013579" />
+      
       <h1 className="text-4xl font-bold mb-8 text-center text-white">Saved Items</h1>
       
+      {/* Saved Notes Section */}
       <div className="mb-12">
-        <h2 className="text-3xl font-bold mb-4 text-white">Saved Notes</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {savedNotes.map((note) => (
-            <NoteCard key={note.id} note={note} />
-          ))}
-        </div>
+        <h2 className="text-3xl font-bold mb-6 text-white">Saved Notes</h2>
+        {savedNotes.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {savedNotes.map((note) => (
+              <NoteCard key={note.id} note={note} />
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-400 text-center py-8">No saved notes yet</p>
+        )}
+      </div>
+
+      {/* Middle Ad */}
+      <div className="my-8">
+        <AdUnit slot="1357924680" />
       </div>
       
+      {/* Saved Courses Section */}
       <div>
-        <h2 className="text-3xl font-bold mb-4 text-white">Saved Courses</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {savedCourses.map((course, index) => (
-            <div key={index} className="bg-gray-800 p-4 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold text-white">{course.title}</h3>
-              <p className="text-gray-400">{course.description}</p>
-            </div>
-          ))}
-        </div>
+        <h2 className="text-3xl font-bold mb-6 text-white">Saved Courses</h2>
+        {savedCourses.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {savedCourses.map((course) => (
+              <CourseCard
+                key={course.title}
+                title={course.title}
+                description={course.text}
+                link={course.link}
+                imgSrc={course.imgSrc}
+                isSaved={true}
+                onSave={() => handleUnsaveCourse(course.title)}
+              />
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-400 text-center py-8">No saved courses yet</p>
+        )}
+      </div>
+
+      {/* Bottom Ad */}
+      <div className="mt-12">
+        <AdUnit slot="3579246801" format="horizontal" />
       </div>
     </div>
   );

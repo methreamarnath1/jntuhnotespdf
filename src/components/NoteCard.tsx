@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Eye, Bookmark } from 'lucide-react';
+import { Eye, Bookmark, Share2 } from 'lucide-react';
 import { Note } from '../types';
 import { LoadingSpinner } from './ui/LoadingSpinner';
 import { PreviewModal } from './PreviewModal';
@@ -22,6 +22,7 @@ export const NoteCard: React.FC<NoteCardProps> = ({ note }) => {
     }
   }, [note]);
 
+  // Function to handle saving the note
   const handleSave = (e: React.MouseEvent) => {
     e.stopPropagation();
     const savedNotes = JSON.parse(localStorage.getItem('savedNotes') || '[]');
@@ -35,6 +36,7 @@ export const NoteCard: React.FC<NoteCardProps> = ({ note }) => {
     }
   };
 
+  // Function to handle viewing the units
   const handleViewUnits = async (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsLoading(true);
@@ -42,6 +44,14 @@ export const NoteCard: React.FC<NoteCardProps> = ({ note }) => {
       setShowUnits(true);
       setIsLoading(false);
     }, 500);
+  };
+
+  // Function to handle sharing the note
+  const handleShare = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const shareUrl = `${window.location.origin}/notes/${note.id}`;
+    navigator.clipboard.writeText(shareUrl);
+    alert('Note URL copied to clipboard!');
   };
 
   return (
@@ -58,6 +68,12 @@ export const NoteCard: React.FC<NoteCardProps> = ({ note }) => {
             onClick={handleSave}
           >
             <Bookmark size={20} fill={isSaved ? 'currentColor' : 'none'} />
+          </button>
+          <button
+            className="absolute top-4 right-16 text-white bg-blue-600 p-2 rounded-full hover:bg-blue-700 transition-all duration-300"
+            onClick={handleShare}
+          >
+            <Share2 size={20} />
           </button>
         </div>
 

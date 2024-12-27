@@ -347,7 +347,7 @@ export const notes: Note[] = [
   {
     id: "31",
     subject:
-      "Professional Elective - I (e.g., Quantum Computing, Data Analytics)",
+      "Data Analytics",
     branch: "CSE",
     year: "3rd",
     semester: "1st",
@@ -355,12 +355,11 @@ export const notes: Note[] = [
     description:
       "Students choose an elective course based on their area of interest.",
     price: 29,
-    unit1: "https://example.com/unit1/programming-for-problem-solving.pdf",
-    unit2: "https://example.com/unit2/programming-for-problem-solving.pdf",
-    unit3: "https://example.com/unit3/programming-for-problem-solving.pdf",
-    unit4: "https://example.com/unit4/programming-for-problem-solving.pdf",
-    unit5:
-      "https://example.com/unit5/programming-for-problem-solving.pdf,professional-elective-1.pdf",
+    unit1: "https://drive.google.com/file/d/1EMK3FDuZanUFGblKIWE9W30SUNuBImrO/view",
+    unit2: "https://drive.google.com/file/d/1xtHnKceZ-dPAHv0ccO6H5fSIlS2wdplu/view",
+    unit3: "https://drive.google.com/file/d/1JtcrUVQ-ZVeKQb1Z8gwTurOLIhLuUzU8/view",
+    unit4: "https://drive.google.com/file/d/1YcCm8CcS2ZqctSYIUHoTExAKRi9jJ4Vc/view",
+    unit5: "https://drive.google.com/file/d/1o-IyUUjLVfm6uLBysdm6DG_nIMecSFDy/view",
   },
   // Third Year - Second Semester
   {

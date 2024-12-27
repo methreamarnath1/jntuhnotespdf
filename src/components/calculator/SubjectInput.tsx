@@ -8,7 +8,7 @@ interface SubjectInputProps {
 
 export const SubjectInput: React.FC<SubjectInputProps> = ({ credits, grade, onChange }) => {
   return (
-    <div className="flex gap-4 mb-4">
+    <div className="flex flex-col sm:flex-row gap-4 mb-4 w-full">
       <input
         type="number"
         placeholder="Credits"

@@ -49,7 +49,7 @@ export const SGPACalculator: React.FC<SGPACalculatorProps> = ({
         ))}
       </div>
 
-      <div className="flex justify-between mt-6 gap-4">
+      <div className="flex flex-col sm:flex-row justify-between mt-6 gap-4">
         <button 
           onClick={onAddSubject}
           className="btn bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg inline-flex items-center"

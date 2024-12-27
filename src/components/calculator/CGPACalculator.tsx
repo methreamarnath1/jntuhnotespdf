@@ -26,7 +26,7 @@ export const CGPACalculator: React.FC<CGPACalculatorProps> = ({
 
       <div className="space-y-4">
         {semesters.map((semester, index) => (
-          <div key={index} className="grid grid-cols-2 gap-4">
+          <div key={index} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-gray-300 mb-1">SGPA</label>
               <input
@@ -51,7 +51,7 @@ export const CGPACalculator: React.FC<CGPACalculatorProps> = ({
         ))}
       </div>
 
-      <div className="flex justify-between mt-6 gap-4">
+      <div className="flex flex-col sm:flex-row justify-between mt-6 gap-4">
         <button 
           onClick={onAddSemester}
           className="btn bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg inline-flex items-center"

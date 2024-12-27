@@ -40,7 +40,7 @@ export const ResultDisplay: React.FC<ResultDisplayProps> = ({ sgpa }) => {
   return (
     <div className="bg-gray-800 rounded-lg p-6 text-center">
       <h2 className="text-3xl font-bold text-white mb-4">Your SGPA: {sgpa.toFixed(2)}</h2>
-      <div className="w-48 h-48 mx-auto">
+      <div className="w-full max-w-xs mx-auto">
         <canvas ref={chartRef}></canvas>
       </div>
       <p className="mt-4 text-gray-400">
