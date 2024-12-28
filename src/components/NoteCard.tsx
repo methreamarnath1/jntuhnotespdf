@@ -4,6 +4,7 @@ import { Note } from '../types';
 import { LoadingSpinner } from './ui/LoadingSpinner';
 import { PreviewModal } from './PreviewModal';
 import { UnitModal } from './UnitModal';
+import { shareNote } from '../utils/sharing';
 
 interface NoteCardProps {
   note: Note;
@@ -22,7 +23,6 @@ export const NoteCard: React.FC<NoteCardProps> = ({ note }) => {
     }
   }, [note]);
 
-  // Function to handle saving the note
   const handleSave = (e: React.MouseEvent) => {
     e.stopPropagation();
     const savedNotes = JSON.parse(localStorage.getItem('savedNotes') || '[]');
@@ -36,7 +36,11 @@ export const NoteCard: React.FC<NoteCardProps> = ({ note }) => {
     }
   };
 
-  // Function to handle viewing the units
+  const handleShare = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    await shareNote(note);
+  };
+
   const handleViewUnits = async (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsLoading(true);
@@ -44,14 +48,6 @@ export const NoteCard: React.FC<NoteCardProps> = ({ note }) => {
       setShowUnits(true);
       setIsLoading(false);
     }, 500);
-  };
-
-  // Function to handle sharing the note
-  const handleShare = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    const shareUrl = `${window.location.origin}/notes/${note.id}`;
-    navigator.clipboard.writeText(shareUrl);
-    alert('Note URL copied to clipboard!');
   };
 
   return (
@@ -63,18 +59,20 @@ export const NoteCard: React.FC<NoteCardProps> = ({ note }) => {
         <div className="w-full h-48 bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center p-6 relative overflow-hidden">
           <div className="absolute inset-0 bg-black opacity-10"></div>
           <h2 className="text-white text-2xl font-bold text-center relative z-10 line-clamp-3">{note.subject}</h2>
-          <button
-            className="absolute top-4 right-4 text-white bg-blue-600 p-2 rounded-full hover:bg-blue-700 transition-all duration-300"
-            onClick={handleSave}
-          >
-            <Bookmark size={20} fill={isSaved ? 'currentColor' : 'none'} />
-          </button>
-          <button
-            className="absolute top-4 right-16 text-white bg-blue-600 p-2 rounded-full hover:bg-blue-700 transition-all duration-300"
-            onClick={handleShare}
-          >
-            <Share2 size={20} />
-          </button>
+          <div className="absolute top-4 right-4 flex gap-2">
+            <button
+              className="text-white bg-blue-600 p-2 rounded-full hover:bg-blue-700 transition-all duration-300"
+              onClick={handleShare}
+            >
+              <Share2 size={20} />
+            </button>
+            <button
+              className="text-white bg-blue-600 p-2 rounded-full hover:bg-blue-700 transition-all duration-300"
+              onClick={handleSave}
+            >
+              <Bookmark size={20} fill={isSaved ? 'currentColor' : 'none'} />
+            </button>
+          </div>
         </div>
 
         <div className="p-6">
