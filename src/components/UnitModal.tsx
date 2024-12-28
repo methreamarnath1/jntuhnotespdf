@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { X, Book } from 'lucide-react';
 import { Note } from '../types';
-import { PDFViewer } from './PDFViewer';
+import { AdModal } from './AdModal'; // Import the AdModal component
 
 interface UnitModalProps {
   isOpen: boolean;
@@ -10,7 +10,8 @@ interface UnitModalProps {
 }
 
 export const UnitModal: React.FC<UnitModalProps> = ({ isOpen, onClose, note }) => {
-  const [selectedUnit, setSelectedUnit] = React.useState<string | null>(null);
+  const [isAdOpen, setIsAdOpen] = useState(false);
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
 
   const units = [
     { id: '1', title: 'Unit 1', pdfUrl: note.unit1, description: 'Introduction and Fundamentals' },
@@ -22,65 +23,70 @@ export const UnitModal: React.FC<UnitModalProps> = ({ isOpen, onClose, note }) =
 
   if (!isOpen) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm">
-      <div className="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-xl shadow-2xl max-w-2xl w-full m-4 border border-gray-700">
-        {selectedUnit ? (
-          <PDFViewer
-            url={units.find(u => u.id === selectedUnit)?.pdfUrl || ''}
-            onClose={() => setSelectedUnit(null)}
-          />
-        ) : (
-          <>
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-white">{note.subject} - Units</h2>
-              <button
-                onClick={onClose}
-                className="text-gray-400 hover:text-white transition-colors"
-              >
-                <X size={24} />
-              </button>
-            </div>
+  const handleUnitClick = (url: string) => {
+    setPdfUrl(url);
+    setIsAdOpen(true);
+  };
 
-            {units.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {units.map((unit) => (
-                  <div
-                    key={unit.id}
-                    onClick={() => setSelectedUnit(unit.id)}
-                    className="bg-gradient-to-br from-gray-700 to-gray-800 rounded-lg p-4 border border-blue-500/20 hover:border-blue-500/40 transition-all cursor-pointer group"
-                  >
-                    <div className="flex items-start gap-3">
-                      <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400 group-hover:scale-110 transition-transform">
-                        <Book size={24} />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-white group-hover:text-blue-300 transition-colors">
-                          {unit.title}
-                        </h3>
-                        <p className="text-sm text-gray-400 mt-1">
-                          {unit.description}
-                        </p>
-                      </div>
+  const handleAdClose = () => {
+    setIsAdOpen(false);
+  };
+
+  const handleAdComplete = () => {
+    if (pdfUrl) {
+      window.open(pdfUrl, '_blank');
+    }
+    setIsAdOpen(false);
+  };
+
+  return (
+    <>
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm">
+        <div className="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-xl shadow-2xl max-w-2xl w-full m-4 border border-gray-700">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold text-white">{note.subject} - Units</h2>
+            <button
+              onClick={onClose}
+              className="text-gray-400 hover:text-white transition-colors"
+            >
+              <X size={24} />
+            </button>
+          </div>
+
+          {units.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {units.map((unit) => (
+                <div
+                  key={unit.id}
+                  onClick={() => handleUnitClick(unit.pdfUrl)}
+                  className="bg-gradient-to-br from-gray-700 to-gray-800 rounded-lg p-4 border border-blue-500/20 hover:border-blue-500/40 transition-all cursor-pointer group"
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400 group-hover:scale-110 transition-transform">
+                      <Book size={24} />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-white group-hover:text-blue-300 transition-colors">
+                        {unit.title}
+                      </h3>
+                      <p className="text-sm text-gray-400 mt-1">
+                        {unit.description}
+                      </p>
                     </div>
                   </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-8 text-gray-400">
-                No units available for this subject yet.
-              </div>
-            )}
-
-            {/* Ad Section */}
-            <div className="mt-6 bg-gradient-to-r from-gray-700/30 to-gray-800/30 p-4 rounded-lg border border-blue-500/10">
-              <div className="h-20 flex items-center justify-center text-gray-500">
-                Advertisement
-              </div>
+                </div>
+              ))}
             </div>
-          </>
-        )}
+          ) : (
+            <div className="text-center py-8 text-gray-400">
+              No units available for this subject yet.
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+
+      {/* Ad Modal */}
+      <AdModal isOpen={isAdOpen} onClose={handleAdClose} onComplete={handleAdComplete} />
+    </>
   );
 };
