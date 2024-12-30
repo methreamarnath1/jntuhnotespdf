@@ -5,7 +5,7 @@ import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { HomePage } from './components/home/HomePage';
 import { NotesPage } from './pages/NotesPage';
-import { NotePage } from './pages/NotePage'; // Import the NotePage component
+import { NotePage } from './pages/NotePage';
 import { CoursesPage } from './pages/CoursesPage';
 import { CalculatorPage } from './pages/CalculatorPage';
 import { AboutPage } from './pages/AboutPage';
@@ -14,6 +14,7 @@ import { Contact } from './pages/Contact';
 import { Terms } from './pages/Terms';
 import { PrivacyPolicy } from './pages/PrivacyPolicy';
 import { InstallPWA } from './components/InstallPWA';
+import {AdUnit} from './components/AdUnit';
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/notes" element={<NotesPage />} />
-            <Route path="/notes/:id" element={<NotePage />} /> {/* Add the NotePage route */}
+            <Route path="/notes/:id" element={<NotePage />} />
             <Route path="/courses" element={<CoursesPage />} />
             <Route path="/calculator" element={<CalculatorPage />} />
             <Route path="/about" element={<AboutPage />} />
@@ -35,6 +36,7 @@ function App() {
           </Routes>
           <Footer />
           <InstallPWA />
+          <AdUnit slot="3229691810" /> {/* Example of non-AMP ad */}
         </div>
       </BrowserRouter>
     </HelmetProvider>
