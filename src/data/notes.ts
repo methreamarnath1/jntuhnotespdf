@@ -303,12 +303,12 @@ export const notes: Note[] = [
     description:
       "Focuses on algorithm design techniques like divide-and-conquer, greedy, and dynamic programming.",
     price: 29,
-    unit1: "https://example.com/unit1/programming-for-problem-solving.pdf",
-    unit2: "https://example.com/unit2/programming-for-problem-solving.pdf",
-    unit3: "https://example.com/unit3/programming-for-problem-solving.pdf",
-    unit4: "https://example.com/unit4/programming-for-problem-solving.pdf",
+    unit1: "https://drive.google.com/file/d/1m80K10DRARqwo82MVNG6L0twpDVOzaWE/view?usp=sharing",
+    unit2: "https://drive.google.com/file/d/1mh2VWZbG8X31CW_f8UHe5TchHVRGFI_M/view?usp=sharing",
+    unit3: "https://drive.google.com/file/d/1lqzS_Hv_XyoK_vH6QPMJKBnG7juJCgJo/view?usp=sharing",
+    unit4: "https://drive.google.com/file/d/1CT0DRDwRQ94NI4K7ettoSJJH8onydp_C/view?usp=sharing",
     unit5:
-      "https://example.com/unit5/programming-for-problem-solving.pdf,design-and-analysis.pdf",
+      "https://drive.google.com/file/d/1TIghqoPPysoxggBrSkCJpZgHzijgrJUq/view?usp=sharing",
   },
   {
     id: "29",
@@ -320,12 +320,12 @@ export const notes: Note[] = [
     description:
       "Includes OSI model, TCP/IP protocols, routing, and network security.",
     price: 29,
-    unit1: "https://example.com/unit1/programming-for-problem-solving.pdf",
-    unit2: "https://example.com/unit2/programming-for-problem-solving.pdf",
-    unit3: "https://example.com/unit3/programming-for-problem-solving.pdf",
-    unit4: "https://example.com/unit4/programming-for-problem-solving.pdf",
+    unit1: "https://drive.google.com/file/d/1Ho5gW7-4DTzFVnvGjSrMYaZL4N4jKsD-/view?usp=sharing",
+    unit2: "https://drive.google.com/file/d/1Kho5IUb8tbjHpsRKazaUe7FeWYjB5E7a/view?usp=sharing",
+    unit3: "https://drive.google.com/file/d/1iZvoU_i2AZB_e2pN54ArNZhW84Csmp34/view?usp=sharing",
+    unit4: "https://drive.google.com/file/d/1gMfvWoeOervc2GlSnPTCxi_z4AvbyKxq/view?usp=sharing",
     unit5:
-      "https://example.com/unit5/programming-for-problem-solving.pdf,computer-networks.pdf",
+      "https://drive.google.com/file/d/1yPm8zVizCZ5URocI6aNM_IntReMosHBb/view?usp=sharing",
   },
   {
     id: "30",
@@ -337,12 +337,12 @@ export const notes: Note[] = [
     description:
       "Covers CI/CD pipelines, containerization, and deployment automation.",
     price: 29,
-    unit1: "https://example.com/unit1/programming-for-problem-solving.pdf",
-    unit2: "https://example.com/unit2/programming-for-problem-solving.pdf",
-    unit3: "https://example.com/unit3/programming-for-problem-solving.pdf",
-    unit4: "https://example.com/unit4/programming-for-problem-solving.pdf",
+    unit1: "https://drive.google.com/file/d/1-us17x2UsyhicVTvG_6_ll5uUDEfTnm0/view?usp=sharing",
+    unit2: "https://drive.google.com/file/d/1FvkiFdw3_Aqt6NyVIxZ4qF98B4F_1POR/view?usp=sharing",
+    unit3: "https://drive.google.com/file/d/198yfadkeyYeu0Rqmuor7i2Fqb2tUGg94/view?usp=sharing",
+    unit4: "https://drive.google.com/file/d/1QNFIU0k5uCBcBFFi-YlhiELhIuQswxZh/view?usp=sharing",
     unit5:
-      "https://example.com/unit5/programming-for-problem-solving.pdf,devops.pdf",
+      "https://drive.google.com/file/d/1jjLE_vNBSe3OqBtWzsTguWmjOrvwP1EE/view?usp=sharing",
   },
   {
     id: "31",
@@ -2358,5 +2358,22 @@ export const notes: Note[] = [
     unit3: "https://example.com/unit3/programming-for-problem-solving.pdf",
     unit4: "https://example.com/unit4/programming-for-problem-solving.pdf",
     unit5: "https://example.com/unit5/programming-for-problem-solving.pdf",
+  },
+  {
+    id: "157",
+    subject:
+      "NATURAL LANGUAGE PROCESSING",
+    branch: "CSE",
+    year: "3rd",
+    semester: "1st",
+    regulation: "R22",
+    description:
+      "Students choose an elective course based on their area of interest.",
+    price: 29,
+    unit1: "https://drive.google.com/file/d/1qYuwDHlPqQPkEAS70S5cdNsxbkwsJ3xg/view?usp=sharing",
+    unit2: "https://drive.google.com/file/d/1o2uELzNeAvg8dQB70LLpj6GJ-E1IGorJ/view?usp=sharing",
+    unit3: "https://drive.google.com/file/d/1YOSeSVnNCEiINgi9biTNS3BBca5WvADW/view?usp=sharing",
+    unit4: "https://drive.google.com/file/d/11SEaZ7bobi0utdHjoT4xUj6-w8LfIptL/view?usp=sharing",
+    unit5: "https://drive.google.com/file/d/1490UMRsMs3YdBvN6yWzYtmurTew9iKW0/view?usp=sharing",
   },
 ];
