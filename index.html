@@ -5,6 +5,8 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO Meta Tags -->
     <meta
       name="description"
       content="Access comprehensive notes for all JNTUH subjects. Download high-quality study materials for engineering courses."
@@ -15,29 +17,31 @@
     />
     <meta name="theme-color" content="#1e40af" />
 
-    <meta name="google-adsense-account" content="ca-pub-7856551759997073" />
+    <!-- Google AdSense -->
     <meta name="google-adsense-account" content="ca-pub-7856551759997073" />
     <meta
       name="google-site-verification"
       content="rCP6xOZWl2DR4q0xadDIcUEERlwXa7zq2wX0PvLUqIU"
     />
+
+    <!-- PWA and Icons -->
     <link rel="manifest" href="/manifest.json" />
     <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+
+    <!-- Title -->
     <title>JNTUH Notes PDF</title>
-    <!-- Add EmailJS SDK -->
+
+    <!-- External Scripts -->
     <!-- Google AdSense Auto Ads Code -->
     <script
       async
       src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7856551759997073"
       crossorigin="anonymous"
     ></script>
-    <!-- End of Google AdSense Auto Ads Code -->
+
+    <!-- EmailJS SDK -->
     <script
       async
-      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7856551759997073"
-      crossorigin="anonymous"
-    ></script>
-    <script
       type="text/javascript"
       src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
     ></script>
@@ -46,10 +50,14 @@
         emailjs.init("OGy0okoUIrjVhFj1v");
       })();
     </script>
-    <!-- Add Razorpay SDK -->
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+ <!-- Content Security Policy (uncomment and adjust as needed) -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://pagead2.googlesyndication.com https://cdn.jsdelivr.net https://checkout.razorpay.com; img-src 'self'; style-src 'self' 'unsafe-inline';"> -->
   </head>
   <body>
+    <amp-auto-ads
+      type="adsense"
+      data-ad-client="ca-pub-7856551759997073"
+    ></amp-auto-ads>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
