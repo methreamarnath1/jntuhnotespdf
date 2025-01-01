@@ -1,21 +1,47 @@
 {
     "name": "JNTUH Notes PDF",
     "short_name": "JNTUH Notes",
-    "description": "Access comprehensive notes for all JNTUH subjects",
+    "description": "Access comprehensive notes for all JNTUH subjects. Download high-quality study materials for engineering courses.",
     "start_url": "/",
     "display": "standalone",
-    "background_color": "#1e1e1e",
+    "background_color": "#ffffff",
     "theme_color": "#1e40af",
+    "orientation": "portrait",
     "icons": [
       {
-        "src": "/icons/icon-192x192.png",
+        "src": "path/to/icon-192x192.png",
         "sizes": "192x192",
         "type": "image/png"
       },
       {
-        "src": "/icons/icon-512x512.png",
+        "src": "path/to/icon-192x192.png",
         "sizes": "512x512",
         "type": "image/png"
       }
-    ]
+    ],
+    "share_target": {
+      "action": "/share",
+      "method": "POST",
+      "enctype": "multipart/form-data",
+      "params": {
+        "title": "jntuhnotespdf",
+        "text": "description",
+        "url": "link",
+        "files": [
+          {
+            "name": "file",
+            "accept": ["image/*"]
+          }
+        ]
+      }
+    },
+    "related_applications": [
+      {
+        "platform": "play",
+        "url": "https://play.google.com/store/apps/details?id=com.jntuhnotespdf.vercel.app.app",
+        "id": "com.jntuhnotespdf.vercel.app.app"
+      }
+    ],
+    "prefer_related_applications": false,
+    "scope": "/"
   }
