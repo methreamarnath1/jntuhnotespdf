@@ -14,7 +14,8 @@ import { Contact } from './pages/Contact';
 import { Terms } from './pages/Terms';
 import { PrivacyPolicy } from './pages/PrivacyPolicy';
 import { InstallPWA } from './components/InstallPWA';
-import {AdUnit} from './components/AdUnit';
+import { AdUnit } from './components/AdUnit';
+import InstallButton from './components/InstallButton';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Footer />
           <InstallPWA />
           <AdUnit slot="3229691810" /> {/* Example of non-AMP ad */}
+          <InstallButton />
         </div>
       </BrowserRouter>
     </HelmetProvider>

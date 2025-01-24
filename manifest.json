@@ -1,9 +1,11 @@
 {
+  "id": "/",
   "name": "JNTUH Notes PDF",
   "short_name": "JNTUH Notes",
   "description": "Access comprehensive notes for all JNTUH subjects. Download high-quality study materials for engineering courses.",
-  "start_url": "/",
+  "start_url": "/?source=pwa",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
   "background_color": "#1f2937",
   "theme_color": "#1e40af",
   "orientation": "any",
@@ -38,5 +40,9 @@
     }
   },
   "prefer_related_applications": false,
-  "scope": "/"
+  "scope": "/",
+  "launch_handler": {
+    "client_mode": ["navigate-existing", "auto"]
+  },
+  "categories": ["education", "books", "utilities"]
 }
