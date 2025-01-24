@@ -1,50 +1,85 @@
 import React, { useState, useEffect } from 'react';
-import { Download } from 'lucide-react'; // Import an icon for the button
+import { Download } from 'lucide-react';
+
+// Define the BeforeInstallPromptEvent interface
+interface BeforeInstallPromptEvent extends Event {
+  readonly platforms: string[];
+  readonly userChoice: Promise<{
+    outcome: 'accepted' | 'dismissed';
+    platform: string;
+  }>;
+  prompt(): Promise<void>;
+}
+
+declare global {
+  interface WindowEventMap {
+    beforeinstallprompt: BeforeInstallPromptEvent;
+  }
+}
 
 const InstallButton = () => {
-  const [deferredPrompt, setDeferredPrompt] = useState<Event | null>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+  const [isInstalling, setIsInstalling] = useState(false);
 
   useEffect(() => {
-    const handleBeforeInstallPrompt = (e: Event) => {
+    const handleBeforeInstallPrompt = (e: BeforeInstallPromptEvent) => {
+      // Prevent Chrome 67 and earlier from automatically showing the prompt
       e.preventDefault();
+      // Stash the event so it can be triggered later
       setDeferredPrompt(e);
-      setIsVisible(true);
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    // Check if app is already installed
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      setDeferredPrompt(null);
+    }
 
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
     };
   }, []);
 
-  const handleInstallClick = () => {
-    if (deferredPrompt) {
-      (deferredPrompt as any).prompt();
-      (deferredPrompt as any).userChoice.then((choiceResult: any) => {
-        if (choiceResult.outcome === 'accepted') {
-          console.log('User accepted the A2HS prompt');
-        } else {
-          console.log('User dismissed the A2HS prompt');
-        }
-        setDeferredPrompt(null);
-        setIsVisible(false);
-      });
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) return;
+
+    try {
+      setIsInstalling(true);
+      // Show the install prompt
+      await deferredPrompt.prompt();
+      // Wait for the user to respond to the prompt
+      const choiceResult = await deferredPrompt.userChoice;
+
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted the install prompt');
+      } else {
+        console.log('User dismissed the install prompt');
+      }
+
+      // Clear the deferredPrompt since it can't be used again
+      setDeferredPrompt(null);
+    } catch (error) {
+      console.error('Installation failed:', error);
+    } finally {
+      setIsInstalling(false);
     }
   };
 
-  if (!isVisible) {
-    return null;
-  }
+  // Don't render anything if the app can't be installed
+  if (!deferredPrompt) return null;
 
   return (
     <button
       onClick={handleInstallClick}
-      className="text-gray-400 hover:text-white focus:outline-none p-2"
+      disabled={isInstalling}
+      className={`text-gray-400 hover:text-white focus:outline-none p-2 transition-colors duration-200 relative ${
+        isInstalling ? 'opacity-50 cursor-not-allowed' : ''
+      }`}
       aria-label="Install App"
+      title="Install App"
     >
-      <Download className="h-6 w-6" />
+      <Download className={`h-6 w-6 ${isInstalling ? 'animate-pulse' : ''}`} />
     </button>
   );
 };
